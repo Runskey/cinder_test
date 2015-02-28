@@ -1,12 +1,14 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/gl/gl.h"
 #include "cinder/params/Params.h"
+#include "boost/thread.hpp"
 
 #include "ciSONDevice.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+
 
 class cinder_testApp : public AppNative {
   public:
@@ -20,12 +22,16 @@ class cinder_testApp : public AppNative {
   void mouseDrag(MouseEvent event);
   void mouseMove(MouseEvent event);
 
+  void backgroundWorking();
+
   float mObjSize;
   Quatf mObjOrientation;
   Vec3f mLightDirection;
   ColorA mColor;
 
   shared_ptr<ciSONDevice> mObject;
+
+  shared_ptr<boost::thread> _thread;
 
 
   params::InterfaceGl mParams;
@@ -53,11 +59,14 @@ void cinder_testApp::setup()
   Rectf rect(10, 10, 200, 200);
   mObject = shared_ptr<ciSONDevice>(new ciSONDevice(rect));
 
+  _thread = shared_ptr<boost::thread>(new boost::thread(&cinder_testApp::backgroundWorking, this));
+  _thread->join();
+//  _thread = new boost::thread(boost::bind(&backgroundWorking, this));
 }
 
 void cinder_testApp::update()
 {
-  console() << getElapsedFrames() << std::endl;
+  //console() << getElapsedFrames() << std::endl;
 }
 
 void cinder_testApp::draw()
@@ -93,6 +102,9 @@ void cinder_testApp::mouseMove(MouseEvent event)
   mObject->mouseMove(event);
 }
 
-
+void cinder_testApp::backgroundWorking()
+{
+  console() << "Hello world, I am a thread!" << endl;
+}
 
 CINDER_APP_NATIVE( cinder_testApp, RendererGl )

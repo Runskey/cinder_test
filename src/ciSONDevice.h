@@ -27,6 +27,8 @@ public:
   void mouseDrag(ci::app::MouseEvent& event);
   void mouseMove(ci::app::MouseEvent& event);
 
+  //void backgroundWorking();
+
   ci::Rectf rect;
   ci::Color pressedColor, idleColor, overColor, strokeColor;
 

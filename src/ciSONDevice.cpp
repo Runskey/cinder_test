@@ -1,4 +1,4 @@
-#include "bspt.h"
+#include "ciSONDevice.h"
 
 using namespace ci;
 using namespace ci::app;
