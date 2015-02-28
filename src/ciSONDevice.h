@@ -10,10 +10,10 @@ using namespace std;
 using namespace ci;
 using namespace ci::app;
 
-class smallCellPT {
+class ciSONDevice {
 public:
-  smallCellPT(const ci::Rectf& rect);
-  virtual ~smallCellPT();
+  ciSONDevice(const ci::Rectf& rect);
+  virtual ~ciSONDevice();
   virtual void draw();
   virtual void pressed();
   virtual void pressedOutside();

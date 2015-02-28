@@ -4,7 +4,7 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-smallCellPT::smallCellPT(const Rectf& rect)
+ciSONDevice::ciSONDevice(const Rectf& rect)
 {
   this->rect = rect;
   pressedColor = Color(1, 0, 0);
@@ -15,12 +15,12 @@ smallCellPT::smallCellPT(const Rectf& rect)
   mOver = false;
 }
 
-smallCellPT::~smallCellPT()
+ciSONDevice::~ciSONDevice()
 {
 
 }
 
-void smallCellPT::draw()
+void ciSONDevice::draw()
 {
   if (mPressed)
   {
@@ -40,36 +40,36 @@ void smallCellPT::draw()
   gl::drawStrokedRect(rect);
 }
 
-void smallCellPT::pressed()
+void ciSONDevice::pressed()
 {
   console() << "pressed" << endl;
 }
 
-void smallCellPT::pressedOutside()
+void ciSONDevice::pressedOutside()
 {
   console() << "pressed outside" << endl;
 }
-void smallCellPT::released()
+void ciSONDevice::released()
 {
   console() << "released" << endl;
 }
-void smallCellPT::releasedOutside()
+void ciSONDevice::releasedOutside()
 {
   console() << "released outside" << endl;
 }
-void smallCellPT::rolledOver()
+void ciSONDevice::rolledOver()
 {
   console() << "rolled over" << endl;
 }
-void smallCellPT::rolledOut()
+void ciSONDevice::rolledOut()
 {
   console() << "rolled out" << endl;
 }
-void smallCellPT::dragged()
+void ciSONDevice::dragged()
 {
   console() << "dragged" << endl;
 }
-void smallCellPT::mouseDown(MouseEvent& event)
+void ciSONDevice::mouseDown(MouseEvent& event)
 {
   if (rect.contains(event.getPos()))
   {
@@ -82,7 +82,7 @@ void smallCellPT::mouseDown(MouseEvent& event)
     pressedOutside();
   }
 }
-void smallCellPT::mouseUp(MouseEvent& event)
+void ciSONDevice::mouseUp(MouseEvent& event)
 {
   if (rect.contains(event.getPos()))
   {
@@ -100,7 +100,7 @@ void smallCellPT::mouseUp(MouseEvent& event)
     releasedOutside();
   }
 }
-void smallCellPT::mouseDrag(MouseEvent& event)
+void ciSONDevice::mouseDrag(MouseEvent& event)
 {
   if (mPressed && rect.contains(event.getPos()))
   {
@@ -109,7 +109,7 @@ void smallCellPT::mouseDrag(MouseEvent& event)
     dragged();
   }
 }
-void smallCellPT::mouseMove(MouseEvent& event)
+void ciSONDevice::mouseMove(MouseEvent& event)
 {
   if (rect.contains(event.getPos()))
   {

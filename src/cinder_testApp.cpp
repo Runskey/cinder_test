@@ -2,7 +2,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/params/Params.h"
 
-#include "bspt.h"
+#include "ciSONDevice.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -25,7 +25,7 @@ class cinder_testApp : public AppNative {
   Vec3f mLightDirection;
   ColorA mColor;
 
-  shared_ptr<smallCellPT> mObject;
+  shared_ptr<ciSONDevice> mObject;
 
 
   params::InterfaceGl mParams;
@@ -51,7 +51,7 @@ void cinder_testApp::setup()
   mParams.addParam("Light Direction", &mLightDirection, "");
 
   Rectf rect(10, 10, 200, 200);
-  mObject = shared_ptr<smallCellPT>(new smallCellPT(rect));
+  mObject = shared_ptr<ciSONDevice>(new ciSONDevice(rect));
 
 }
 
@@ -62,7 +62,6 @@ void cinder_testApp::update()
 
 void cinder_testApp::draw()
 {
-  gl::enableAlphaBlending();
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0.5 ) ); 
 
