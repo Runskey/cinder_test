@@ -31,7 +31,7 @@ class cinder_testApp : public AppNative {
 
   shared_ptr<ciSONDevice> mObject;
 
-  shared_ptr<boost::thread> _thread;
+  //shared_ptr<boost::thread> _thread;
 
 
   params::InterfaceGl mParams;
@@ -56,12 +56,11 @@ void cinder_testApp::setup()
 
   mParams.addParam("Light Direction", &mLightDirection, "");
 
-  Rectf rect(10, 10, 200, 200);
+  Rectf rect(200, 200, 210, 210);
   mObject = shared_ptr<ciSONDevice>(new ciSONDevice(rect));
 
-  _thread = shared_ptr<boost::thread>(new boost::thread(&cinder_testApp::backgroundWorking, this));
-  _thread->join();
-//  _thread = new boost::thread(boost::bind(&backgroundWorking, this));
+  //_thread = shared_ptr<boost::thread>(new boost::thread(&cinder_testApp::backgroundWorking, this));
+  //_thread->join();
 }
 
 void cinder_testApp::update()

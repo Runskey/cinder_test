@@ -1,10 +1,10 @@
 #pragma once
 
-#include "cinder\Rect.h"
-#include "cinder\Color.h"
-#include "cinder\app\MouseEvent.h"
-#include "cinder\gl\gl.h"
-#include "cinder\app\App.h"
+#include "cinder/Rect.h"
+#include "cinder/Color.h"
+#include "cinder/app/MouseEvent.h"
+#include "cinder/gl/gl.h"
+#include "cinder/app/App.h"
 
 using namespace std;
 using namespace ci;
