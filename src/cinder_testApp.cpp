@@ -43,7 +43,7 @@ void cinder_testApp::prepareSettings(Settings *settings)
   settings->setWindowSize(800, 600);
   settings->setTitle("Cinder demo app");
 
-  settings->setFrameRate(30);
+  settings->setFrameRate(60);
 }
 
 void cinder_testApp::setup()
