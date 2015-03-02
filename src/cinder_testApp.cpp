@@ -1,50 +1,8 @@
-#include "cinder/app/AppNative.h"
-#include "cinder/gl/gl.h"
-#include "cinder/params/Params.h"
 #include "cinder/ImageIo.h"
-#include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
-#include "boost/thread.hpp"
+//#include "boost/thread.hpp"
 
-#include "ciSONDevice.h"
-#include "ciSONFemto.h"
-#include "ciSONUE.h"
-
-using namespace ci;
-using namespace ci::app;
-using namespace std;
-
-
-class cinder_testApp : public AppNative {
-  public:
-	void setup();
-  void prepareSettings(Settings *settings);
-  void update();
-	void draw();
-
-  void mouseDown(MouseEvent event);
-  void mouseUp(MouseEvent event);
-  void mouseDrag(MouseEvent event);
-  void mouseMove(MouseEvent event);
-
-  void backgroundWorking();
-
-  float mObjSize;
-  Quatf mObjOrientation;
-  Vec3f mLightDirection;
-  ColorA mColor;
-
-  shared_ptr<ciSONDevice> mObject;
-
-  //shared_ptr<boost::thread> _thread;
-
-  list<ciSONFemto> mFemtoList;
-  list<ciSONUE> mUEList;
-
-  gl::Texture mBgImage;
-
-  params::InterfaceGl mParams;
-};
+#include "cinder_testApp.h"
 
 void cinder_testApp::prepareSettings(Settings *settings)
 {
@@ -76,7 +34,7 @@ void cinder_testApp::setup()
   mFemtoList.push_back(ciSONFemto(Vec2f(200, 490)));
   mFemtoList.push_back(ciSONFemto(Vec2f(460, 200)));
 
-  Rand::randSeed(time(0));
+  Rand::randSeed((unsigned long)time(0));
   mUEList.push_back(ciSONUE(Vec2f(500, 500)));
   mUEList.push_back(ciSONUE(Vec2f(500, 500)));
 
