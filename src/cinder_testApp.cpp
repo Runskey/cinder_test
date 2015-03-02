@@ -3,10 +3,12 @@
 #include "cinder/params/Params.h"
 #include "cinder/ImageIo.h"
 #include "cinder/gl/Texture.h"
+#include "cinder/Rand.h"
 #include "boost/thread.hpp"
 
 #include "ciSONDevice.h"
 #include "ciSONFemto.h"
+#include "ciSONUE.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -37,6 +39,7 @@ class cinder_testApp : public AppNative {
   //shared_ptr<boost::thread> _thread;
 
   list<ciSONFemto> mFemtoList;
+  list<ciSONUE> mUEList;
 
   gl::Texture mBgImage;
 
@@ -73,6 +76,10 @@ void cinder_testApp::setup()
   mFemtoList.push_back(ciSONFemto(Vec2f(200, 490)));
   mFemtoList.push_back(ciSONFemto(Vec2f(460, 200)));
 
+  Rand::randSeed(time(0));
+  mUEList.push_back(ciSONUE(Vec2f(500, 500)));
+  mUEList.push_back(ciSONUE(Vec2f(500, 500)));
+
   //_thread = shared_ptr<boost::thread>(new boost::thread(&cinder_testApp::backgroundWorking, this));
   //_thread->join();
 }
@@ -81,6 +88,10 @@ void cinder_testApp::update()
 {
   //console() << getElapsedFrames() << std::endl;
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
+  {
+    p->update();
+  }
+  for (list<ciSONUE>::iterator p = mUEList.begin(); p != mUEList.end(); p++)
   {
     p->update();
   }
@@ -108,7 +119,10 @@ void cinder_testApp::draw()
   {
     p->draw();
   }
-
+  for (list<ciSONUE>::iterator p = mUEList.begin(); p != mUEList.end(); p++)
+  {
+    p->draw();
+  }
 }
 
 void cinder_testApp::mouseDown(MouseEvent event)

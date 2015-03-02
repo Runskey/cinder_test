@@ -34,7 +34,7 @@ void ciSONFemto::update()
 void ciSONFemto::mouseDown(ci::app::MouseEvent& event)
 {
   Vec2f dir = event.getPos() - mLoc;
-  if (dir.lengthSquared() < mRadius)
+  if (dir.length() < mRadius)
   {
     mPressed = !mPressed;
   }
