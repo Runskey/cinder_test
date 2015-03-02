@@ -1,9 +1,12 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/gl/gl.h"
 #include "cinder/params/Params.h"
+#include "cinder/ImageIo.h"
+#include "cinder/gl/Texture.h"
 #include "boost/thread.hpp"
 
 #include "ciSONDevice.h"
+#include "ciSONFemto.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -33,6 +36,9 @@ class cinder_testApp : public AppNative {
 
   //shared_ptr<boost::thread> _thread;
 
+  list<ciSONFemto> mFemtoList;
+
+  gl::Texture mBgImage;
 
   params::InterfaceGl mParams;
 };
@@ -40,7 +46,7 @@ class cinder_testApp : public AppNative {
 void cinder_testApp::prepareSettings(Settings *settings)
 {
   settings->setResizable(false);
-  settings->setWindowSize(800, 600);
+  //settings->setWindowSize(800, 600);
   settings->setTitle("Cinder demo app");
 
   settings->setFrameRate(60);
@@ -48,7 +54,12 @@ void cinder_testApp::prepareSettings(Settings *settings)
 
 void cinder_testApp::setup()
 {
-  mParams = params::InterfaceGl("Parameters", Vec2i(200, 400));
+  // Setup background image
+  mBgImage = gl::Texture(loadImage(loadAsset("l89_resize.jpg")));
+  setWindowSize(mBgImage.getWidth(), mBgImage.getHeight());
+
+  // Setup parameters dialog
+  mParams = params::InterfaceGl("Parameters", Vec2i(200, 300));
   mParams.addParam("Cube Size", &mObjSize, "min=0.1 max=20.5 step=0.5 keyIncr=z keyDecr=Z");
   mParams.addParam("Cube Rotation", &mObjOrientation);
   mParams.addParam("Cube Color", &mColor, "");
@@ -59,6 +70,9 @@ void cinder_testApp::setup()
   Rectf rect(200, 200, 210, 210);
   mObject = shared_ptr<ciSONDevice>(new ciSONDevice(rect));
 
+  mFemtoList.push_back(ciSONFemto(Vec2f(200, 490)));
+  mFemtoList.push_back(ciSONFemto(Vec2f(460, 200)));
+
   //_thread = shared_ptr<boost::thread>(new boost::thread(&cinder_testApp::backgroundWorking, this));
   //_thread->join();
 }
@@ -66,27 +80,43 @@ void cinder_testApp::setup()
 void cinder_testApp::update()
 {
   //console() << getElapsedFrames() << std::endl;
+  for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
+  {
+    p->update();
+  }
 }
 
 void cinder_testApp::draw()
 {
-	// clear out the window with black
-	gl::clear( Color( 0, 0, 0.5 ) ); 
 
-  gl::setViewport(getWindowBounds());
-  gl::setMatricesWindow(getWindowSize());
+  // clear out the window
+  gl::clear(Color::black(), true);
 
-//  gl::color(Color(1, 0, 0));
-//  gl::drawSolidCircle(Vec2f(100, 100), 20, 6);
+  // reset color to white before tinting the background image
+  gl::color(Color::white());
+  mBgImage.enableAndBind();
+  gl::draw(mBgImage, getWindowBounds());
+  mBgImage.disable();
+
+  //gl::setViewport(getWindowBounds());
+  //gl::setMatricesWindow(getWindowSize());
 
   mParams.draw();
+  //mObject->draw();
 
-  mObject->draw();
+  for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
+  {
+    p->draw();
+  }
+
 }
 
 void cinder_testApp::mouseDown(MouseEvent event)
 {
-  mObject->mouseDown(event);
+  for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
+  {
+    p->mouseDown(event);
+  }
 }
 void cinder_testApp::mouseUp(MouseEvent event)
 {

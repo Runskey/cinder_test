@@ -109,10 +109,12 @@
   <ItemGroup>
     <ClCompile Include="..\src\cinder_testApp.cpp" />
     <ClCompile Include="..\src\ciSONDevice.cpp" />
+    <ClCompile Include="..\src\ciSONFemto.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\src\ciSONDevice.h" />
+    <ClInclude Include="..\src\ciSONFemto.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
