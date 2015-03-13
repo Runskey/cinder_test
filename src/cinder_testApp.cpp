@@ -195,15 +195,16 @@ void cinder_testApp::createScrollingGraph()
   
   if (!bGraph)
   {
-    Window::Format format;
-    format.setSize(50, 50);
-    format.setResizable(false);
-    mGraph = createWindow(format);
+    mGraph = shared_ptr<CinderMovingGraph>(new CinderMovingGraph(static_cast<shared_ptr<AppNative>>(this)));
+    mGraph->openWindow();
+    app::WindowRef graphWin = mGraph->getWindow();
+    graphWin->connectDraw(&cinder_testApp::drawScrollingGraph, this);
+    //(mGraph->getWindow())->connectDraw(&CinderMovingGraph::draw, mGraph);
     
-    mGraph->setTitle("Throughput Performance window");
+    //mGraph->setTitle("Throughput Performance window");
 
-    mGraph->connectDraw(&cinder_testApp::drawScrollingGraph, this);
-    mGraph->connectClose(&cinder_testApp::destroyScrollingGraph, this);
+    //mGraph->connectDraw(&cinder_testApp::drawScrollingGraph, this);
+    //mGraph->connectClose(&cinder_testApp::destroyScrollingGraph, this);
     
     bGraph = true;
   }  
@@ -212,13 +213,10 @@ void cinder_testApp::createScrollingGraph()
 
 void cinder_testApp::drawScrollingGraph()
 {
-  gl::clear(Color::black(), true);
-
-  gl::pushModelView();
-  gl::setMatricesWindow(getWindowSize());
-  gl::color(Colorf(1.0f, 1.0f, 0.0f));
-  gl::drawSolidCircle(Vec2f(20.0f, 20.0f), 10);
-  gl::popModelView();
+  if (bGraph)
+  {
+    mGraph->draw();
+  }
 }
 
 void cinder_testApp::destroyScrollingGraph()

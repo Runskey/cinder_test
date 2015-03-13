@@ -10,6 +10,7 @@
 #include "ciSONDevice.h"
 #include "ciSONFemto.h"
 #include "ciSONUE.h"
+#include "CinderMovingGraph.h"
 
 
 using namespace ci;
@@ -53,13 +54,15 @@ protected:
 
   // 3D camera controller
   MayaCamUI mMayaCam;
+  
+  // Graph
+  shared_ptr<CinderMovingGraph> mGraph;
 
   float mDegree;
   params::InterfaceGl mParams;
   
   app::WindowRef mDefaultWin;
 
-  app::WindowRef mGraph;
   bool bGraph;
 
 };
