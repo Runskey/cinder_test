@@ -4,6 +4,8 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/params/Params.h"
+#include "cinder/Camera.h"
+#include "cinder/MayaCamUI.h"
 
 #include "ciSONDevice.h"
 #include "ciSONFemto.h"
@@ -19,12 +21,22 @@ public:
   void setup();
   void prepareSettings(Settings *settings);
   void update();
-  void draw();
+  void drawDefault();
+
+  void drawGrid(float size = 100.f, float step = 10.0f);
 
   void mouseDown(MouseEvent event);
   void mouseUp(MouseEvent event);
   void mouseDrag(MouseEvent event);
   void mouseMove(MouseEvent event);
+
+  void mouseDownW1(MouseEvent event);
+
+  void keyDown(KeyEvent event);
+
+  void createScrollingGraph();
+  void drawScrollingGraph();
+  void destroyScrollingGraph();
 
   void backgroundWorking();
 
@@ -43,4 +55,16 @@ public:
   gl::Texture mBgImage;
 
   params::InterfaceGl mParams;
+
+protected:
+
+  // 3D camera controller
+  MayaCamUI mMayaCam;
+  CameraPersp mCamera;
+
+  float mDegree;
+
+  app::WindowRef mGraph;
+  bool bGraph;
+
 };
