@@ -114,6 +114,11 @@ void cinder_testApp::update()
 {
   console() << getElapsedFrames() << std::endl;
   
+  if (bGraph)
+  {
+    mGraph->feedIn(randFloat(0, 100));
+  }
+  
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
   {
     p->update();

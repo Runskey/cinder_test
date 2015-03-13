@@ -5,7 +5,13 @@
 CinderMovingGraph::CinderMovingGraph(shared_ptr<AppNative> app, int history, float maxValue, float minValue):
   mApp(app), mHistory(history), mMaxValue(maxValue), mMinValue(minValue)
 {
-  mDataList.resize(mHistory, 0);
+  mDataList.clear();
+  
+  for (int i=0; i<mHistory; i++)
+  {
+    mDataList.push_back(i);
+  }
+  
   bOpened = false;
 }
 
@@ -38,9 +44,28 @@ void CinderMovingGraph::draw()
 {
   gl::clear(Color::black(), true);
   gl::pushModelView();
+  gl::enableAlphaBlending();
+
+  gl::enableWireframe();
   gl::setMatricesWindow(getWindowSize());
   gl::color(Colorf(1.0f, 1.0f, 0.0f));
-  gl::drawSolidCircle(Vec2f(20.0f, 20.0f), 10);
+  
+  glBegin(GL_POLYGON);
+  
+  gl::vertex(Vec2f(0,0));
+  
+  list<float>::iterator it = mDataList.begin();
+  for (int i=0; i<mHistory; i++, it++)
+  {
+    gl::vertex(Vec2f(i, *it));
+  }
+  gl::vertex(Vec2f(mHistory,0));
+  glEnd();
+  
+  //gl::drawSolidCircle(Vec2f(20.0f, 20.0f), 10);
+  gl::disableWireframe();
+  
+  gl::disableAlphaBlending();
   gl::popModelView();
 }
 
