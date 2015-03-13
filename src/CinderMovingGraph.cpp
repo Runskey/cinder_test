@@ -46,24 +46,25 @@ void CinderMovingGraph::draw()
   gl::pushModelView();
   gl::enableAlphaBlending();
 
-  gl::enableWireframe();
+  //gl::enableWireframe();
   gl::setMatricesWindow(getWindowSize());
-  gl::color(Colorf(1.0f, 1.0f, 0.0f));
+//  gl::color(Colorf(1.0f, 1.0f, 0.0f));
   
-  glBegin(GL_POLYGON);
   
-  gl::vertex(Vec2f(0,0));
+  
+  glBegin(GL_TRIANGLE_STRIP);
   
   list<float>::iterator it = mDataList.begin();
   for (int i=0; i<mHistory; i++, it++)
   {
+    gl::color(((float)i/mHistory) * Color::white());
+    gl::vertex(Vec2f(i, 0));
     gl::vertex(Vec2f(i, *it));
   }
-  gl::vertex(Vec2f(mHistory,0));
   glEnd();
   
   //gl::drawSolidCircle(Vec2f(20.0f, 20.0f), 10);
-  gl::disableWireframe();
+  //gl::disableWireframe();
   
   gl::disableAlphaBlending();
   gl::popModelView();

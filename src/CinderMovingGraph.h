@@ -9,7 +9,7 @@ using namespace ci::app;
 
 class CinderMovingGraph {
 public:
-  CinderMovingGraph(shared_ptr<AppNative> app, int history=100, float maxValue=100, float minValue=0);
+  CinderMovingGraph(shared_ptr<AppNative> app, int history=300, float maxValue=100, float minValue=0);
   virtual ~CinderMovingGraph();
   
   void draw();
