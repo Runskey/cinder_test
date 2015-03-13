@@ -20,13 +20,13 @@ void cinder_testApp::setup()
   //setWindowSize(mBgImage.getWidth(), mBgImage.getHeight());
 
   // Setup parameters dialog
-  mParams = params::InterfaceGl("Parameters", Vec2i(200, 300));
-  mParams.addParam("Cube Size", &mObjSize, "min=0.1 max=20.5 step=0.5 keyIncr=z keyDecr=Z");
-  mParams.addParam("Cube Rotation", &mObjOrientation);
-  mParams.addParam("Cube Color", &mColor, "");
-  mParams.addSeparator();
+  //mParams = params::InterfaceGl("Parameters", Vec2i(200, 300));
+  //mParams.addParam("Cube Size", &mObjSize, "min=0.1 max=20.5 step=0.5 keyIncr=z keyDecr=Z");
+  //mParams.addParam("Cube Rotation", &mObjOrientation);
+  //mParams.addParam("Cube Color", &mColor, "");
+  //mParams.addSeparator();
 
-  mParams.addParam("Light Direction", &mLightDirection, "");
+  //mParams.addParam("Light Direction", &mLightDirection, "");
 
   mDegree = 0.0f;
 
@@ -49,22 +49,22 @@ void cinder_testApp::setup()
 
   bGraph = false;
 
-  // Redirect the draw signal for default window
-  WindowRef window = getWindow();
-  window->connectDraw(&cinder_testApp::drawDefault, this);
-  window->connectMouseDown(&cinder_testApp::mouseDownW1, this);
-
-
-  //_thread = shared_ptr<boost::thread>(new boost::thread(&cinder_testApp::backgroundWorking, this));
-  //_thread->join();
+  // Setup multiple-window
+  mDefaultWin = getWindow();
+  mDefaultWin->connectDraw(&cinder_testApp::drawDefault, this);
+  mDefaultWin->connectMouseDown(&cinder_testApp::mouseDownDefault, this);
+  mDefaultWin->connectMouseUp(&cinder_testApp::mouseUpDefault, this);
+  mDefaultWin->connectMouseDrag(&cinder_testApp::mouseDragDefault, this);
+  mDefaultWin->connectMouseMove(&cinder_testApp::mouseMoveDefault, this);
+  mDefaultWin->connectKeyDown(&cinder_testApp::keyDownDefault, this);
 
 }
+
 
 void cinder_testApp::drawDefault()
 {
   mDegree += 0.05f;
   // Update the 3D camera
-  mCamera = mMayaCam.getCamera();
   gl::setMatrices(mMayaCam.getCamera());
 
   // clear out the window
@@ -94,7 +94,7 @@ void cinder_testApp::drawDefault()
   gl::disableWireframe();
 
 
-  mParams.draw();
+  //mParams.draw();
   //mObject->draw();
 
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
@@ -112,14 +112,13 @@ void cinder_testApp::drawDefault()
 
 void cinder_testApp::update()
 {
-  uint32_t frameNum = getElapsedFrames();
-
-  console() << "Update from frame #" << frameNum << endl;
-  //console() << getElapsedFrames() << std::endl;
+  console() << getElapsedFrames() << std::endl;
+  
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
   {
     p->update();
   }
+  
   for (list<ciSONUE>::iterator p = mUEList.begin(); p != mUEList.end(); p++)
   {
     p->update();
@@ -143,51 +142,36 @@ void cinder_testApp::drawGrid(float size, float step)
   gl::drawVector(Vec3f::zero(), Vec3f(20.0f, 0.0f, 0.0f), 2, 0.5);
 }
 
-void cinder_testApp::mouseDownW1(MouseEvent event)
-{
-}
-
-void cinder_testApp::mouseDown(MouseEvent event)
+void cinder_testApp::mouseDownDefault(MouseEvent event)
 {
   // Update 3D camera
-  if (getWindow() == mGraph)
-  {
-  }
-  else
-  {
-    mMayaCam.mouseDown(event.getPos());
-  }
-
-  
+  mMayaCam.mouseDown(event.getPos());
 
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
   {
     p->mouseDown(event);
   }
 }
-void cinder_testApp::mouseUp(MouseEvent event)
+
+void cinder_testApp::mouseUpDefault(MouseEvent event)
 {
   mObject->mouseUp(event);
 }
-void cinder_testApp::mouseDrag(MouseEvent event)
+
+void cinder_testApp::mouseDragDefault(MouseEvent event)
 {
   // Update 3D camera
-  if (getWindow() == mGraph)
-  {
-  }
-  else
-  {
-    mMayaCam.mouseDrag(event.getPos(), event.isLeftDown(), event.isMiddleDown(), event.isRightDown());
-  }
+  mMayaCam.mouseDrag(event.getPos(), event.isLeftDown(), event.isMiddleDown(), event.isRightDown());
 
   mObject->mouseDrag(event);
 }
-void cinder_testApp::mouseMove(MouseEvent event)
+
+void cinder_testApp::mouseMoveDefault(MouseEvent event)
 {
   mObject->mouseMove(event);
 }
 
-void cinder_testApp::keyDown(KeyEvent event)
+void cinder_testApp::keyDownDefault(KeyEvent event)
 {
   switch (event.getCode()) {
   case KeyEvent::KEY_ESCAPE:

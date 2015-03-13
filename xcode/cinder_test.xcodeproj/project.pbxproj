@@ -14,6 +14,8 @@
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		3B933824E2D145828C369A09 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3F9C935678CC48E8A8A9074F /* CinderApp.icns */; };
 		3E6702771AA2111D001FC820 /* ciSONDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6702751AA2111D001FC820 /* ciSONDevice.cpp */; };
+		3E7E6B121AB3112100359592 /* ciSONFemto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E7E6B101AB3112100359592 /* ciSONFemto.cpp */; };
+		3E7E6B131AB3112100359592 /* ciSONUE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E7E6B111AB3112100359592 /* ciSONUE.cpp */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -32,6 +34,11 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		3E6702751AA2111D001FC820 /* ciSONDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ciSONDevice.cpp; path = ../src/ciSONDevice.cpp; sourceTree = "<group>"; };
 		3E6702761AA2111D001FC820 /* ciSONDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ciSONDevice.h; path = ../src/ciSONDevice.h; sourceTree = "<group>"; };
+		3E7E6B101AB3112100359592 /* ciSONFemto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ciSONFemto.cpp; path = ../src/ciSONFemto.cpp; sourceTree = "<group>"; };
+		3E7E6B111AB3112100359592 /* ciSONUE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ciSONUE.cpp; path = ../src/ciSONUE.cpp; sourceTree = "<group>"; };
+		3E7E6B141AB3113500359592 /* cinder_testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cinder_testApp.h; path = ../src/cinder_testApp.h; sourceTree = "<group>"; };
+		3E7E6B151AB3113500359592 /* ciSONFemto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ciSONFemto.h; path = ../src/ciSONFemto.h; sourceTree = "<group>"; };
+		3E7E6B161AB3113500359592 /* ciSONUE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ciSONUE.h; path = ../src/ciSONUE.h; sourceTree = "<group>"; };
 		3F9C935678CC48E8A8A9074F /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
@@ -70,6 +77,8 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3E7E6B101AB3112100359592 /* ciSONFemto.cpp */,
+				3E7E6B111AB3112100359592 /* ciSONUE.cpp */,
 				3E6702751AA2111D001FC820 /* ciSONDevice.cpp */,
 				7399401FE285418BA7DB4426 /* cinder_testApp.cpp */,
 			);
@@ -124,6 +133,9 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				3E7E6B141AB3113500359592 /* cinder_testApp.h */,
+				3E7E6B151AB3113500359592 /* ciSONFemto.h */,
+				3E7E6B161AB3113500359592 /* ciSONUE.h */,
 				3E6702761AA2111D001FC820 /* ciSONDevice.h */,
 				C97CF3AAC2364E0DB0030EA2 /* Resources.h */,
 				BB9E9BE879E740CE97A8904B /* cinder_test_Prefix.pch */,
@@ -176,6 +188,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cinder_test" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -212,7 +225,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E7E6B121AB3112100359592 /* ciSONFemto.cpp in Sources */,
 				3E6702771AA2111D001FC820 /* ciSONDevice.cpp in Sources */,
+				3E7E6B131AB3112100359592 /* ciSONUE.cpp in Sources */,
 				BD6BBF1EB5974CCEA01F0D5B /* cinder_testApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +291,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
 				CINDER_PATH = ../../cinder_0.8.6_mac;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -284,6 +298,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
 			};
@@ -293,7 +308,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
 				CINDER_PATH = ../../cinder_0.8.6_mac;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";

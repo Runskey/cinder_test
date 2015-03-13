@@ -18,21 +18,18 @@ using namespace std;
 
 class cinder_testApp : public AppNative {
 public:
-  void setup();
   void prepareSettings(Settings *settings);
+  void setup();
   void update();
+  
   void drawDefault();
+  void mouseDownDefault(MouseEvent event);
+  void mouseUpDefault(MouseEvent event);
+  void mouseDragDefault(MouseEvent event);
+  void mouseMoveDefault(MouseEvent event);
+  void keyDownDefault(KeyEvent event);
 
   void drawGrid(float size = 100.f, float step = 10.0f);
-
-  void mouseDown(MouseEvent event);
-  void mouseUp(MouseEvent event);
-  void mouseDrag(MouseEvent event);
-  void mouseMove(MouseEvent event);
-
-  void mouseDownW1(MouseEvent event);
-
-  void keyDown(KeyEvent event);
 
   void createScrollingGraph();
   void drawScrollingGraph();
@@ -40,9 +37,6 @@ public:
 
   void backgroundWorking();
 
-  float mObjSize;
-  Quatf mObjOrientation;
-  Vec3f mLightDirection;
   ColorA mColor;
 
   shared_ptr<ciSONDevice> mObject;
@@ -54,15 +48,16 @@ public:
 
   gl::Texture mBgImage;
 
-  params::InterfaceGl mParams;
 
 protected:
 
   // 3D camera controller
   MayaCamUI mMayaCam;
-  CameraPersp mCamera;
 
   float mDegree;
+  params::InterfaceGl mParams;
+  
+  app::WindowRef mDefaultWin;
 
   app::WindowRef mGraph;
   bool bGraph;
