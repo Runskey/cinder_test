@@ -1,6 +1,6 @@
 #include "cinder/ImageIo.h"
 #include "cinder/Rand.h"
-//#include "boost/thread.hpp"
+#include "cinder/Sphere.h"
 
 #include "cinder_testApp.h"
 
@@ -47,11 +47,16 @@ void cinder_testApp::setup()
   mUEList.push_back(ciSONUE(Vec2f(500, 500)));
   mUEList.push_back(ciSONUE(Vec2f(500, 500)));
 
-  bGraph = false;
+  // 
+  mGraphOpened = false;
+  mGraph = shared_ptr<CinderMovingGraph>(new CinderMovingGraph());
+
+  mPressed = false;
 
   // Setup multiple-window
   mDefaultWin = getWindow();
   mDefaultWin->connectDraw(&cinder_testApp::drawDefault, this);
+  mDefaultWin->connectClose(&cinder_testApp::closeDefault, this);
   mDefaultWin->connectMouseDown(&cinder_testApp::mouseDownDefault, this);
   mDefaultWin->connectMouseUp(&cinder_testApp::mouseUpDefault, this);
   mDefaultWin->connectMouseDrag(&cinder_testApp::mouseDragDefault, this);
@@ -90,7 +95,15 @@ void cinder_testApp::drawDefault()
 
   gl::enableWireframe();
   //gl::drawColorCube(Vec3f::zero(), Vec3f(4.0f, 4.0f, 4.0f));
-  gl::drawSphere(Vec3f::zero(), 10.0f);
+  if (mPressed)
+  {
+    gl::color(Colorf(204.0f, 204.0f, 0));
+  }
+  else
+  {
+    gl::color(Colorf(224.0f, 224.0f, 224.0f));
+  }
+  gl::drawSphere(Vec3f::zero(), 10.0f, 64);
   gl::disableWireframe();
 
 
@@ -110,14 +123,19 @@ void cinder_testApp::drawDefault()
   gl::disableDepthWrite();
 }
 
+void cinder_testApp::closeDefault()
+{
+  if (mGraphOpened)
+  {
+    mGraphWindow->close();
+  }
+}
+
 void cinder_testApp::update()
 {
   console() << getElapsedFrames() << std::endl;
   
-  if (bGraph)
-  {
-    mGraph->feedIn(randFloat(0, 100));
-  }
+  mGraph->feedIn(randFloat(0, 200));
   
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
   {
@@ -156,6 +174,17 @@ void cinder_testApp::mouseDownDefault(MouseEvent event)
   {
     p->mouseDown(event);
   }
+
+  float u = event.getPos().x / (float)getWindowWidth();
+  float v = 1.0f - event.getPos().y / (float)getWindowHeight();
+  Ray ray = mMayaCam.getCamera().generateRay(u, v, mMayaCam.getCamera().getAspectRatio());
+
+  Sphere sball = Sphere(Vec3f::zero(), 10.0f);
+  if (sball.intersects(ray))
+  {
+    mPressed = !mPressed;
+  }
+
 }
 
 void cinder_testApp::mouseUpDefault(MouseEvent event)
@@ -189,44 +218,42 @@ void cinder_testApp::keyDownDefault(KeyEvent event)
     //Vec3f up = camera.getWorldUp();
     break;
   case KeyEvent::KEY_w:
-    createScrollingGraph();
+    openMovingGraph();
     break;
   }
 
 }
 
-void cinder_testApp::createScrollingGraph()
+void cinder_testApp::openMovingGraph()
 {
-  
-  if (!bGraph)
-  {
-    mGraph = shared_ptr<CinderMovingGraph>(new CinderMovingGraph(static_cast<shared_ptr<AppNative>>(this)));
-    mGraph->openWindow();
-    app::WindowRef graphWin = mGraph->getWindow();
-    graphWin->connectDraw(&cinder_testApp::drawScrollingGraph, this);
-    //(mGraph->getWindow())->connectDraw(&CinderMovingGraph::draw, mGraph);
-    
-    //mGraph->setTitle("Throughput Performance window");
+  if (mGraphOpened) return;
 
-    //mGraph->connectDraw(&cinder_testApp::drawScrollingGraph, this);
-    //mGraph->connectClose(&cinder_testApp::destroyScrollingGraph, this);
-    
-    bGraph = true;
-  }  
-  
+  Window::Format format;
+  format.setSize(300, 200);
+  format.setResizable(false);
+  mGraphWindow = createWindow(format);
+
+  mGraphWindow->connectDraw(&cinder_testApp::drawMovingGraph, this);
+  mGraphWindow->connectClose(&cinder_testApp::closeMovingGraph, this);
+
+  mGraph->openWindow();
+  mGraphOpened = true;  
 }
 
-void cinder_testApp::drawScrollingGraph()
+void cinder_testApp::drawMovingGraph()
 {
-  if (bGraph)
+  if (mGraphOpened)
   {
     mGraph->draw();
   }
 }
 
-void cinder_testApp::destroyScrollingGraph()
+void cinder_testApp::closeMovingGraph()
 {
-  bGraph = false;
+  if (!mGraphOpened) return;
+
+  mGraph->closeWindow();
+  mGraphOpened = false;
 }
 
 

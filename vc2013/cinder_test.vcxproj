@@ -107,6 +107,7 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\CinderMovingGraph.cpp" />
     <ClCompile Include="..\src\cinder_testApp.cpp" />
     <ClCompile Include="..\src\ciSONDevice.cpp" />
     <ClCompile Include="..\src\ciSONFemto.cpp" />
@@ -114,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h" />
+    <ClInclude Include="..\src\CinderMovingGraph.h" />
     <ClInclude Include="..\src\cinder_testApp.h" />
     <ClInclude Include="..\src\ciSONDevice.h" />
     <ClInclude Include="..\src\ciSONFemto.h" />

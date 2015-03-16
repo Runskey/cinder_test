@@ -24,6 +24,7 @@ public:
   void update();
   
   void drawDefault();
+  void closeDefault();
   void mouseDownDefault(MouseEvent event);
   void mouseUpDefault(MouseEvent event);
   void mouseDragDefault(MouseEvent event);
@@ -32,9 +33,9 @@ public:
 
   void drawGrid(float size = 100.f, float step = 10.0f);
 
-  void createScrollingGraph();
-  void drawScrollingGraph();
-  void destroyScrollingGraph();
+  void openMovingGraph();
+  void closeMovingGraph();
+  void drawMovingGraph();
 
   void backgroundWorking();
 
@@ -55,14 +56,17 @@ protected:
   // 3D camera controller
   MayaCamUI mMayaCam;
   
+  app::WindowRef mDefaultWin;
+
   // Graph
   shared_ptr<CinderMovingGraph> mGraph;
+  app::WindowRef mGraphWindow;
 
   float mDegree;
   params::InterfaceGl mParams;
-  
-  app::WindowRef mDefaultWin;
 
-  bool bGraph;
+  bool mGraphOpened;
+
+  bool mPressed;
 
 };

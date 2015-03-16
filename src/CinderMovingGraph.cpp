@@ -2,8 +2,8 @@
 
 #include "cinder/gl/gl.h"
 
-CinderMovingGraph::CinderMovingGraph(shared_ptr<AppNative> app, int history, float maxValue, float minValue):
-  mApp(app), mHistory(history), mMaxValue(maxValue), mMinValue(minValue)
+CinderMovingGraph::CinderMovingGraph(int history, float maxValue, float minValue):
+  mHistory(history), mMaxValue(maxValue), mMinValue(minValue)
 {
   mDataList.clear();
   
@@ -27,21 +27,18 @@ void CinderMovingGraph::feedIn(float newData)
 
 void CinderMovingGraph::openWindow()
 {
-  if (bOpened) return;
-  
-  Window::Format format;
-  format.setSize(300, 200);
-  format.setResizable(false);
-  mGraphWindow = mApp->createWindow(format);
+  if (!bOpened) bOpened = true;
 }
 
-app::WindowRef CinderMovingGraph::getWindow()
+void CinderMovingGraph::closeWindow()
 {
-  return mGraphWindow;
+  if (bOpened) bOpened = false;
 }
 
 void CinderMovingGraph::draw()
 {
+  if (!bOpened) return;
+
   gl::clear(Color::black(), true);
   gl::pushModelView();
   gl::enableAlphaBlending();
@@ -49,8 +46,6 @@ void CinderMovingGraph::draw()
   //gl::enableWireframe();
   gl::setMatricesWindow(getWindowSize());
 //  gl::color(Colorf(1.0f, 1.0f, 0.0f));
-  
-  
   
   glBegin(GL_TRIANGLE_STRIP);
   
@@ -68,12 +63,6 @@ void CinderMovingGraph::draw()
   
   gl::disableAlphaBlending();
   gl::popModelView();
-}
-
-void CinderMovingGraph::close()
-{
-  mGraphWindow.reset();
-  bOpened = false;
 }
 
 void CinderMovingGraph::mouseDown(MouseEvent event) {}

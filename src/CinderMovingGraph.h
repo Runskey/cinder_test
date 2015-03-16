@@ -9,11 +9,10 @@ using namespace ci::app;
 
 class CinderMovingGraph {
 public:
-  CinderMovingGraph(shared_ptr<AppNative> app, int history=300, float maxValue=100, float minValue=0);
+  CinderMovingGraph(int history=300, float maxValue=100, float minValue=0);
   virtual ~CinderMovingGraph();
   
   void draw();
-  void close();
   void mouseDown(MouseEvent event);
   void mouseUp(MouseEvent event);
   void mouseDrag(MouseEvent event);
@@ -21,15 +20,13 @@ public:
   void keyDown(KeyEvent event);
   
   void openWindow();
-  app::WindowRef getWindow();
+  void closeWindow();
   void feedIn(float newData);
   
 protected:
   float mMaxValue, mMinValue;
   int mHistory;
   
-  shared_ptr<AppNative> mApp;
-  app::WindowRef mGraphWindow;
   bool bOpened;
   
   list<float> mDataList;
