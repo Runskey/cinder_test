@@ -93,7 +93,7 @@ void cinder_testApp::drawDefault()
 
   drawGrid();
 
-  gl::enableWireframe();
+  //gl::enableWireframe();
   //gl::drawColorCube(Vec3f::zero(), Vec3f(4.0f, 4.0f, 4.0f));
   if (mPressed)
   {
@@ -103,8 +103,8 @@ void cinder_testApp::drawDefault()
   {
     gl::color(Colorf(224.0f, 224.0f, 224.0f));
   }
-  gl::drawSphere(Vec3f::zero(), 10.0f, 64);
-  gl::disableWireframe();
+  //gl::drawSphere(Vec3f::zero(), 10.0f, 64);
+  //gl::disableWireframe();
 
 
   //mParams.draw();
@@ -135,12 +135,13 @@ void cinder_testApp::update()
 {
   console() << getElapsedFrames() << std::endl;
   
-  mGraph->feedIn(randFloat(0, 200));
+  mGraph->feedIn(100.0f + randFloat(0, 50));
   
   for (list<ciSONFemto>::iterator p = mFemtoList.begin(); p != mFemtoList.end(); p++)
   {
     p->update();
   }
+
   
   for (list<ciSONUE>::iterator p = mUEList.begin(); p != mUEList.end(); p++)
   {
@@ -229,8 +230,9 @@ void cinder_testApp::openMovingGraph()
   if (mGraphOpened) return;
 
   Window::Format format;
-  format.setSize(300, 200);
+  format.setSize(320, 220);
   format.setResizable(false);
+  format.setTitle("Performance Curve");
   mGraphWindow = createWindow(format);
 
   mGraphWindow->connectDraw(&cinder_testApp::drawMovingGraph, this);

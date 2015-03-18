@@ -2,6 +2,7 @@
 #define __CINDER_MOVING_GRAPH__
 
 #include "cinder/app/AppNative.h"
+#include "cinder/Camera.h"
 
 using namespace std;
 using namespace ci;
@@ -22,10 +23,13 @@ public:
   void openWindow();
   void closeWindow();
   void feedIn(float newData);
+  void drawCoordinate();
   
 protected:
   float mMaxValue, mMinValue;
+  float mBorderOff;
   int mHistory;
+  CameraOrtho mOrtCam;
   
   bool bOpened;
   

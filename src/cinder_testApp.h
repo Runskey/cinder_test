@@ -43,7 +43,6 @@ public:
 
   shared_ptr<ciSONDevice> mObject;
 
-  //shared_ptr<boost::thread> _thread;
 
   list<ciSONFemto> mFemtoList;
   list<ciSONUE> mUEList;
@@ -55,6 +54,7 @@ protected:
 
   // 3D camera controller
   MayaCamUI mMayaCam;
+
   
   app::WindowRef mDefaultWin;
 
