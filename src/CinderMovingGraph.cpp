@@ -43,9 +43,9 @@ void CinderMovingGraph::draw()
   gl::clear(Color::black(), true);
   gl::pushModelView();
 
-  //mOrtCam.setOrtho(0, getWindowWidth(), getWindowHeight(), 0, 1, -1);
-  //gl::setMatrices(mOrtCam);
-  gl::setMatricesWindow(getWindowSize());
+  mOrtCam.setOrtho(0, getWindowWidth(), 0, getWindowHeight(), 1, -1);
+  gl::setMatrices(mOrtCam);
+  //gl::setMatricesWindow(getWindowSize());
 
   drawCoordinate();
 
